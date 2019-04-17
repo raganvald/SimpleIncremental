@@ -30,18 +30,16 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        targeting.OnNewTargetAcquired += StartChasing;
-        targeting.OnTargetLost += StopChasing;
         anim = gameObject.GetComponent<Animator>();
     }
 
-    private void StartChasing()
+    public void StartChasing()
     {
         if (!chasing)
             StartCoroutine(ChaseTarget());
     }
 
-    private void StopChasing()
+    public void StopChasing()
     {
         chasing = false;
         rb2d.velocity = Vector2.zero;
