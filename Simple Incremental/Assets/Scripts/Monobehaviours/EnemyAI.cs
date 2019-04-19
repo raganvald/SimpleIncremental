@@ -12,7 +12,6 @@ public class EnemyAI : MonoBehaviour
     EnemyMovement enemyMovement;
     EnemyAttackRanged enemyAttackRanged;
     EnemyAttackMelee enemyAttackMelee;
-    Animator anim;
     public int closestRange = 1;
     public int rangedWeaponDistanceMax;
     public int rangedWeaponDistanceMin;
@@ -39,7 +38,6 @@ public class EnemyAI : MonoBehaviour
     {
         enemyTargeting.OnNewTargetAcquired += TargetAcquired;
         enemyTargeting.OnTargetLost += TargetLost;
-        anim = gameObject.GetComponent<Animator>();
     }
 
     public void TargetAcquired()

@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     Rigidbody2D rb2d = null;
     EnemyTargeting targeting = null;
-    bool chasing = false;
+    public bool chasing = false;
     Animator anim;
     int speedHash = Animator.StringToHash("Speed");
 
@@ -48,13 +48,33 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator ChaseTarget()
     {
-        float direction = Mathf.Sign((targeting.target.position - transform.position).x);
-        float lastDir = direction;
-        chasing = true;
+        Transform target;
+        float direction = 0f;
+        float lastDir = 0f;
+        target = targeting.target;
+        if (target)
+        {
+            direction = Mathf.Sign((target.position - transform.position).x);
+            lastDir = direction;
+            chasing = true;
+        }
+        else
+        {
+            StopChasing();
+
+
+
+        }
+
         while (chasing)
         {
             Vector2 lastVel = rb2d.velocity;
-            direction = Mathf.Sign((targeting.target.position - transform.position).x);
+            target = targeting.target;
+            if (target)
+                direction = Mathf.Sign((target.position - transform.position).x);
+            else
+                chasing = false;
+
             if (lastDir != direction)
             {
                 yield return new WaitForSeconds(responseTime);
@@ -72,4 +92,19 @@ public class EnemyMovement : MonoBehaviour
 
         }
     }
+    /*
+    public void StartPatroling()
+    {
+
+    }
+    public void StopPatroling()
+    {
+
+    }
+    private IEnumerator Patrol()
+    {
+
+    }*/
+
+
 }

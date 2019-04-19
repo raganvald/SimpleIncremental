@@ -21,7 +21,7 @@ public class EnemyAttackRanged : MonoBehaviour
     LayerMask layer;
     private int layerNum;
     EnemyTargeting targeting = null;
-    bool attacking = false;
+    public bool attacking = false;
     bool continueAttacking = false;
 
     private void OnDisable()
