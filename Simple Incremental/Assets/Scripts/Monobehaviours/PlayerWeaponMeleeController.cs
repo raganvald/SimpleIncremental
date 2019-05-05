@@ -13,15 +13,11 @@ public class PlayerWeaponMeleeController : MonoBehaviour
     ContactFilter2D cf2d;
     Collider2D[] colliders;
     Animator anim;
-    bool canAttack;
     List<CharacterHealth> damagedCharacters = new List<CharacterHealth>();
     int meleeAttackingHash = Animator.StringToHash("MeleeAttacking");
     int meleeAttackHash = Animator.StringToHash("MeleeAttack");
+    BoxCollider2D weaponCollider;
 
-    private void OnDisable()
-    {
-        canAttack = true;
-    }
 
     private void Awake()
     {
@@ -30,7 +26,6 @@ public class PlayerWeaponMeleeController : MonoBehaviour
         cf2d.layerMask = mask; 
         cf2d.useLayerMask = true;
         colliders = new Collider2D[10];
-        canAttack = true;
     }
 
     private void Update()
@@ -44,7 +39,6 @@ public class PlayerWeaponMeleeController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
         {
             anim.SetBool(meleeAttackingHash, true);
-            StartCoroutine(CheckForAttacking());
         }
     }
 
@@ -52,31 +46,28 @@ public class PlayerWeaponMeleeController : MonoBehaviour
     public void AttackClear()
     {
         damagedCharacters.Clear();
+        Array.Clear(colliders, 0, colliders.Length);
     }
-
-    private IEnumerator CheckForAttacking()
+    //Called from Animation
+    public void EnableWeapon()
     {
-        if (canAttack)
+        weaponCollider = weapon.gameObject.GetComponent<BoxCollider2D>();
+        weaponCollider.enabled = true;
+        weaponCollider.OverlapCollider(cf2d, colliders);
+        foreach (Collider2D col in colliders)
         {
-            canAttack = false;
-            BoxCollider2D collider = weapon.gameObject.AddComponent<BoxCollider2D>();
-            while (anim.GetBool(meleeAttackingHash))
+            CharacterHealth ch = col?.GetComponent<CharacterHealth>();
+            if (!damagedCharacters.Contains(ch) && ch != null)
             {
-                collider.OverlapCollider(cf2d, colliders);
-                foreach (Collider2D col in colliders)
-                {
-                    CharacterHealth ch = col?.GetComponent<CharacterHealth>();
-                    if (!damagedCharacters.Contains(ch) && ch != null)
-                    {
-                        ch?.TakeDamage(damage);
-                        damagedCharacters.Add(ch);
-                    }
-                }
-
-                yield return new WaitForFixedUpdate();
+                ch?.TakeDamage(damage);
+                damagedCharacters.Add(ch);
             }
-            Destroy(weapon.GetComponent<Collider2D>());
-            canAttack = true;
         }
     }
+    //Called from Animation
+    public void DisableWeapon()
+    {
+        weaponCollider.enabled = false;
+    }
+
 }
