@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 69f87d0ab09f84941a5b28e6d7bb34cc
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
+  missingFiles:
+  - Assets/All-Terrain.tsx
+  errors:
+  - 'Missing tileset asset: All-Terrain.tsx'
+  warnings: []
+  missingSortingLayers: []
+  missingLayers: []
+  missingTags: []
+  importerVersion: 12
+  pixelsPerUnit: 100
+  edgesPerEllipse: 32
+  numberOfObjectsImported: 2
+  tilesAsObjects: 0
+  sortingMode: 0
+  isIsometric: 0
+  customImporterClassName: 
+  internalTilesets: []

@@ -23,6 +23,7 @@ public class ObjectPooler : MonoBehaviour
     {
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
             dict = new Dictionary<string, Queue<GameObject>>();
         }

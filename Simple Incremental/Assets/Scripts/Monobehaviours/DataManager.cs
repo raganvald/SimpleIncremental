@@ -24,6 +24,7 @@ public class DataManager : MonoBehaviour
     {
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
             playerLevel = player.GetComponent<PlayerLevel>();
             Item[] allitems = Resources.FindObjectsOfTypeAll<Item>();
