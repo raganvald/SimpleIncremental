@@ -29,8 +29,15 @@ public class CharacterLoot : MonoBehaviour
             if(lootChance >= Random.Range(0f, 1f))
             {
                 GameObject go = ObjectPooler.instance.GetPooledObject(lootPrefab);
-                go.transform.position = transform.position;
-                go.GetComponent<LootItem>().template = item;
+                if (go)
+                {
+                    go.transform.position = transform.position;
+                    go.GetComponent<LootItem>().template = item;
+                } else
+                {
+                    Debug.Log("Unable to drop loot item, null object");
+                }
+                
             }
         }
     }

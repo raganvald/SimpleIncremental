@@ -59,7 +59,19 @@ public class ObjectPooler : MonoBehaviour
 
         if (dict[go.name].Count > 0)
         {
-            return dict[go.name].Dequeue();
+            GameObject poolableObj = dict[go.name].Dequeue();
+            if (poolableObj == null)
+            {
+                Debug.Log("Null object, Someone destroyed a poolable object");
+                poolableObj = Instantiate(go);
+            }
+            PoolableObject po = poolableObj.GetComponent<PoolableObject>();
+            if (po == null)
+            {
+                po = poolableObj.AddComponent<PoolableObject>();
+            }
+            po.prefab = go;
+            return poolableObj;
         }
         else
         {
